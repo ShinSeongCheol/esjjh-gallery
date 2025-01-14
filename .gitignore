@@ -128,3 +128,13 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+#frontend
+frontend/dist
+frontend/public/*
+frontend/node_modules
+
+#backend
+backend/.env
+backend/node_modules
+
