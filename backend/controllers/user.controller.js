@@ -8,6 +8,7 @@ const get = (req,res, next) => {
 }
 
 const post = (req, res, next) => {
+    console.log(req.file);
     res.send('upload')
 }
 
