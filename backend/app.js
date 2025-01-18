@@ -2,7 +2,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const { sequelize } = require('./models');
+const db = require('./models');
+const sequelize = db.sequelize;
 
 sequelize.sync({ force: false })
   .then(() => {
@@ -13,7 +14,7 @@ sequelize.sync({ force: false })
   });
 
 var usersRouter = require('./routes/users');
-const imageRouter = require('./routes/image');
+const uploadRouter = require('./routes/upload');
 
 var app = express();
 
@@ -24,6 +25,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/users', usersRouter);
-app.use('/images', imageRouter);
+app.use('/upload', uploadRouter);
 
 module.exports = app;

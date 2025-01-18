@@ -1,18 +1,25 @@
-const express = require('express');
-const router = express.Router();
-const multer = require('multer');
-var path = require('path');
+const db = require("../models");
+const Picture = db.Picture;
 
-const get = (req,res, next) => {
-    res.send('images');
-}
+const get = async (req, res, next) => {
+    const picture_list = await Picture.findAll();
+    res.send(picture_list);
+};
 
-const post = (req, res, next) => {
-    console.log(req.file);
-    res.send('upload')
-}
+const post = async (req, res, next) => {
+    const file = req.file;
+    const picture = await Picture.create({
+        original_name: file.originalname,
+        encoding: file.encoding,
+        mime_type: file.mimetype,
+        size: file.size,
+        destination: file.destination,
+        filename: file.filename,
+    });
+    res.send(picture);
+};
 
 module.exports = {
     get,
-    post
-}
+    post,
+};
