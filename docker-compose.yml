@@ -1,6 +1,6 @@
 version: '3'
 services:
-  WS:
+  ws:
     image: nginx
     ports:
       - "20080:80"
