@@ -1,5 +1,6 @@
 const db = require('../models')
 const fs = require('fs');
+const path = require('path')
 const Picture = db.Picture;
 
 const pictureService = {};
@@ -15,8 +16,7 @@ pictureService.getImages = async function() {
         item.id = dataValues.id;
         item.image_name = dataValues.original_name;
         item.mime_type = dataValues.mime_type;
-        item.image_path = `${dataValues.destination}\\${dataValues.filename}`;
-
+        item.image_path = path.join(dataValues.destination, dataValues.filename);
         item.image_data = fs.readFileSync(item.image_path, (err, data) => {
             return image_data;
         })
