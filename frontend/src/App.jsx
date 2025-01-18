@@ -1,4 +1,5 @@
-import { Container, Col, Row, Image, Navbar, Nav, NavDropdown  } from 'react-bootstrap';
+import { Container, Col, Row, Image, Navbar } from 'react-bootstrap';
+import { useState } from 'react';
 import Banner from './Banner';
 
 function App() {
@@ -82,26 +83,36 @@ function App() {
 
   return (
     <>
-    <Navbar className='bg-body-tertiary shadow-sm' expand='lg' sticky='top'>
-      <Container fluid>
-        <Navbar.Brand className='px-2' href="#"><Image src='/logo/esjjh.png' thumbnail width={150}></Image></Navbar.Brand>
-      </Container>
-    </Navbar>
-    
-    <Container className='bg-body-secondary' fluid>
-      <Container>
-        {chunkedPictures.map((chunk, index) => (
-          <Row key={index}>
-            {chunk.map((picture, pictureIndex) => (
-              <Col sm={6} lg={3} key={pictureIndex}>
-                <div className='ratio ratio-1x1 my-2 shadow'>
-                  <Image src={`/picture/${picture}`} fluid thumbnail></Image>
-                </div>
+    <Container fluid>
+      <Row>
+        <Col lg={2} className='p-0 m-0 border-secondary-subtle border-1 border-end'>
+          <Container className='sticky-top'>
+            <Row>
+              <Col className='p-2 m-2'>
+                <a href="#" className=''><Image src='/logo/esjjh.png' width={150}></Image></a>
               </Col>
-            ))}
-          </Row>
-        ))}
-      </Container>
+            </Row>
+          </Container>
+        </Col>
+
+        <Col lg={10} className='p-0 m-0'>
+          <Container className='bg-body-secondary' fluid>
+            <Container>
+              {chunkedPictures.map((chunk, index) => (
+                <Row key={index}>
+                  {chunk.map((picture, pictureIndex) => (
+                    <Col sm={6} lg={3} key={pictureIndex}>
+                      <div className='ratio ratio-1x1 my-2 shadow'>
+                        <Image src={`/picture/${picture}`} fluid thumbnail></Image>
+                      </div>
+                    </Col>
+                  ))}
+                </Row>
+              ))}
+            </Container>
+          </Container>
+        </Col>
+      </Row>
     </Container>
     </>
   )
