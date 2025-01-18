@@ -139,3 +139,5 @@ backend/.env
 backend/node_modules
 backend/public/*
 
+#docker volume folder
+volume
