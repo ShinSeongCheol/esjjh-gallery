@@ -10,8 +10,18 @@ services:
     networks:
       network:
     volumes:
-      - html:/usr/share/nginx/html
-      - nginx:/etc/nginx 
+      - nginx:/etc/nginx
+
+  front:
+    image: nginx
+    restart: always
+    environment:
+      TZ : "Asia/Seoul"
+    networks:
+      network:
+    volumes:
+      - front_dist:/usr/share/nginx/html
+      - front_nginx:/etc/nginx
 
   backend:
     build: .
@@ -36,15 +46,16 @@ services:
       POSTGRES_PASSWORD: seongcheol
       TZ : "Asia/Seoul"
     ports:
-      - "25432:5432" 
+      - "25432:5432"
     volumes:
       - db:/var/lib/postgresql/data
 
 volumes:
-  html:
   nginx:
   db:
   public:
+  front_nginx:
+  front_dist:
 
 networks:
   network:
