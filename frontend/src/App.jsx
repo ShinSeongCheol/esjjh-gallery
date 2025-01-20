@@ -1,4 +1,4 @@
-import { Container, Col, Row, Image, Navbar } from 'react-bootstrap';
+import { Container, Col, Row, Image, Navbar, Button} from 'react-bootstrap';
 import { useState } from 'react';
 import Banner from './Banner';
 
@@ -83,19 +83,16 @@ function App() {
 
   return (
     <>
+    <Navbar bg="white" data-bs-theme="white" className='shadow-sm sticky-top'>
+      <Container>
+        <Navbar.Brand href="#"><a href="#" className=''><Image src='/logo/esjjh.png' width={150}></Image></a></Navbar.Brand>
+        <Button variant="success">로그인</Button>
+      </Container>
+    </Navbar>
+
     <Container fluid>
       <Row>
-        <Col lg={2} className='p-0 m-0 border-secondary-subtle border-1 border-end'>
-          <Container className='sticky-top'>
-            <Row>
-              <Col className='p-2 m-2'>
-                <a href="#" className=''><Image src='/logo/esjjh.png' width={150}></Image></a>
-              </Col>
-            </Row>
-          </Container>
-        </Col>
-
-        <Col lg={10} className='p-0 m-0'>
+        <Col className='p-0 m-0'>
           <Container className='bg-body-secondary' fluid>
             <Container>
               {chunkedPictures.map((chunk, index) => (
