@@ -15,6 +15,7 @@ sequelize.sync({ force: false })
 
 var usersRouter = require('./routes/users');
 const uploadRouter = require('./routes/upload');
+const kakaoRouter = require('./routes/kakao');
 
 var app = express();
 
@@ -24,7 +25,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/users', usersRouter);
+// app.use('/users', usersRouter);
 app.use('/upload', uploadRouter);
+app.use('/kakao', kakaoRouter);
 
 module.exports = app;
