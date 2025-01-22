@@ -2,7 +2,7 @@ import { Container, Col, Row, Image, Navbar, Button} from 'react-bootstrap';
 import axios from 'axios';
 
 function App() {
-
+  
   let pictures = []
   pictures.push('KakaoTalk_20250105_075627787.jpg')
   pictures.push('KakaoTalk_20250105_075627787_01.jpg')
@@ -85,20 +85,12 @@ function App() {
     <Navbar bg="white" data-bs-theme="white" className='shadow-sm sticky-top'>
       <Container>
         <Navbar.Brand href="#"><a href="#" className=''><Image src='/logo/esjjh.png' width={150}></Image></a></Navbar.Brand>
-        <Button variant="success" onClick={() => {
-          axios.get('http://localhost:3000/users/kakao_login')
-          .then(function (response) {
-            // 성공 핸들링
-            location.href = response.data;
-          })
-          .catch(function (error) {
-            // 에러 핸들링
-            console.log(error);
-          })
-          .finally(function () {
-            // 항상 실행되는 영역
-          });
-        }}>로그인</Button>
+        <button className='border border-none' onClick={() => {
+          let kakao_login_url = import.meta.env.VITE_BACKEND_URL + '/kakao/login'; 
+          window.open(kakao_login_url, "_parent");
+        }}>
+          <Image src={'/button/kakao_login_small.png'}></Image>
+        </button>
       </Container>
     </Navbar>
 
