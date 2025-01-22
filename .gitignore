@@ -131,7 +131,9 @@ dist
 
 #frontend
 frontend/dist
-frontend/public/*
+frontend/public/picture
+frontend/public/plan
+frontend/public/vite.svg
 frontend/node_modules
 
 #backend
