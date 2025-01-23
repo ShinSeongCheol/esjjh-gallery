@@ -44,6 +44,8 @@ module.exports = (sequelize, DataTypes) => {
             freezeTableName: true,
             tableName: 'picture_tb',
             timestamps: true,
+            createdAt: 'created_at',
+            updatedAt: 'updated_at',
             charset: 'utf8mb4',
             collate: 'utf8_general_ci'
         }
