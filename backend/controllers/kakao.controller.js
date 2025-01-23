@@ -10,7 +10,8 @@ const getCode = async (req, res, next) => {
     const query = req.query;
     const code = query.code;
     const token_data = await kakaoService.getToken(code);
-    console.log(token_data);
+    const data = await kakaoService.getUserInfo(token_data);
+    console.log(data);
     res.redirect(process.env.FRONT_URL);
 }
 

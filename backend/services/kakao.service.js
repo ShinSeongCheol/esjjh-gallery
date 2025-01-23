@@ -39,4 +39,41 @@ kakaoService.getToken = async function(code) {
     return token_data;
 }
 
+kakaoService.getUserInfo = async function(token_data) {
+    const kakao_user_info_url = process.env.KAKAO_USER_INFO_URL;
+
+    const access_token = token_data.access_token;
+    const token_type = token_data.token_type;
+    const refresh_token = token_data.refresh_token;
+    const expires_in = token_data.expires_in;
+    const scope = token_data.scope;
+    const refresh_token_expires_in = token_data.refresh_token_expires_in;
+
+    const user_info = await axios.get(kakao_user_info_url, {
+        headers: {
+            'Authorization': token_type + " " + access_token,
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+        }
+    }).then((res) => {
+        console.log(res);
+        return res.data;
+    })
+
+    const user_dto = {
+        id: user_info.id,
+        nickname: user_info.kakao_account.profile.nickname,
+        thumbnail_image_url: user_info.kakao_account.profile.thumbnail_image_url,
+        profile_image_url: user_info.kakao_account.profile.profile_image_url,
+
+        access_token,
+        token_type,
+        refresh_token,
+        expires_in,
+        scope,
+        refresh_token_expires_in,
+    }
+
+    return user_dto;
+}
+
 module.exports = kakaoService
