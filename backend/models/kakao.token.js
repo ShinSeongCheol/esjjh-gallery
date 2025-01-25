@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define(
+    const KakaoToken = sequelize.define(
         "KakaoToken",
         {
             id: {
@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true,
                 primaryKey: true,
                 allowNull: false,
-                comment: "카카오 회원 번호 ID",
+                comment: "카카오 토큰 고유 ID",
             },
             access_token: {
                 type: DataTypes.STRING(64),
@@ -50,4 +50,14 @@ module.exports = (sequelize, DataTypes) => {
             collate: 'utf8_general_ci'
         }
     );
+
+    KakaoToken.associate = function(models) {
+        KakaoToken.belongsTo(models.KakaoUser, {
+            foreignKey: {
+                name: 'kakao_id'
+            },
+        });
+    }
+
+    return KakaoToken;
 };

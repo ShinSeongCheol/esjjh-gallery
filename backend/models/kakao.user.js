@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define(
+    const KakaoUser = sequelize.define(
         "KakaoUser",
         {
             id: {
@@ -34,4 +34,14 @@ module.exports = (sequelize, DataTypes) => {
             collate: 'utf8_general_ci'
         }
     );
+
+    KakaoUser.associate = function(models) {
+        KakaoUser.hasOne(models.KakaoToken, {
+            foreignKey: {
+                name: 'kakao_id'
+            },
+        });
+    }
+
+    return KakaoUser;
 };
