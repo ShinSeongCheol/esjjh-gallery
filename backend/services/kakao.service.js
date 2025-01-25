@@ -76,4 +76,22 @@ kakaoService.getUserInfo = async function(token_data) {
     return user_dto;
 }
 
+kakaoService.logout = async (token_data) => {
+    kakao_user_logout_url = process.env.KAKAO_USER_LOGOUT_URL;
+    const access_token = token_data.access_token;
+    const token_type = token_data.token_type;
+
+    const logout = await axios.post(kakao_user_logout_url, {}, {
+        headers: {
+            'Authorization': token_type + " " + access_token,
+        }
+    }).then((res) => {
+        return res.data;        
+    }).catch((err) => {
+        console.log(err)
+    });
+
+    return logout;
+}
+
 module.exports = kakaoService
