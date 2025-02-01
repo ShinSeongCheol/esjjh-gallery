@@ -53,9 +53,9 @@ module.exports = (sequelize, DataTypes) => {
 
     KakaoToken.associate = function(models) {
         KakaoToken.belongsTo(models.KakaoUser, {
-            foreignKey: {
-                name: 'kakao_user_id'
-            },
+            targetKey: 'id',
+            foreignKey: 'kakao_user_id',
+            onDelete: 'CASCADE',
         });
     }
 
