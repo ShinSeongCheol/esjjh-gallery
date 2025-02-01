@@ -7,37 +7,37 @@ module.exports = (sequelize, DataTypes) => {
                 autoIncrement: true,
                 primaryKey: true,
                 allowNull: false,
-                comment: "카카오 토큰 고유 ID",
-            },
-            access_token: {
-                type: DataTypes.STRING(64),
-                allowNull: false,
-                comment: "카카오 Access Token",
+                comment: "ID",
             },
             token_type: {
                 type: DataTypes.STRING(8),
                 allowNull: false,
-                comment: "카카오 Token Type",
+                comment: "토큰 타입",
             },
-            refresh_token: {
-                type: DataTypes.STRING(16),
+            access_token: {
+                type: DataTypes.STRING(64),
                 allowNull: false,
-                comment: "카카오 Refresh Token",
+                comment: "액세스 토큰",
             },
             expires_in: {
                 type: DataTypes.INTEGER,
                 allowNull: false,
-                comment: "카카오 Access Token 만료 시간",
+                comment: "액세스 토큰 만료 시간",
             },
-            scope: {
-                type: DataTypes.STRING(256),
+            refresh_token: {
+                type: DataTypes.STRING(16),
                 allowNull: false,
-                comment: "카카오 동의 항목",
+                comment: "리프레쉬 토큰",
             },
             refresh_token_expires_in: {
                 type: DataTypes.STRING(256),
                 allowNull: false,
-                comment: "카카오 Refresh Token 만료 시간",
+                comment: "리프레쉬 토큰 만료 시간",
+            },
+            scope: {
+                type: DataTypes.STRING(256),
+                allowNull: false,
+                comment: "정보 조회 권한 범위",
             },
         },
         {
@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
     KakaoToken.associate = function(models) {
         KakaoToken.belongsTo(models.KakaoUser, {
             foreignKey: {
-                name: 'kakao_id'
+                name: 'kakao_user_id'
             },
         });
     }

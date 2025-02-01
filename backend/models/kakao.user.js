@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
             nickname: {
                 type: DataTypes.STRING(16),
                 allowNull: false,
-                comment: "오리지널 사진 명",
+                comment: "닉네임",
             },
             thumbnail_image_url: {
                 type: DataTypes.STRING(64),
@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
             profile_image_url: {
                 type: DataTypes.STRING(64),
                 allowNull: false,
-                comment: "프로파일 이메일 주소",
+                comment: "프로파일 이미지 주소",
             },
         },
         {
@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
     KakaoUser.associate = function(models) {
         KakaoUser.hasOne(models.KakaoToken, {
             foreignKey: {
-                name: 'kakao_id'
+                name: 'kakao_user_id'
             },
         });
     }
