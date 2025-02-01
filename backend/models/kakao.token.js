@@ -20,17 +20,17 @@ module.exports = (sequelize, DataTypes) => {
                 comment: "액세스 토큰",
             },
             expires_in: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.STRING(64),
                 allowNull: false,
                 comment: "액세스 토큰 만료 시간",
             },
             refresh_token: {
-                type: DataTypes.STRING(16),
+                type: DataTypes.STRING(64),
                 allowNull: false,
                 comment: "리프레쉬 토큰",
             },
             refresh_token_expires_in: {
-                type: DataTypes.STRING(256),
+                type: DataTypes.STRING(64),
                 allowNull: false,
                 comment: "리프레쉬 토큰 만료 시간",
             },
