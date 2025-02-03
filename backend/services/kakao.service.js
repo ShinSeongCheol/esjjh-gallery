@@ -3,6 +3,7 @@ const db = require('../models');
 const { where } = require('sequelize');
 const KakaoUser = db.KakaoUser;
 const KakaoToken = db.KakaoToken;
+const UserType = db.UserType;
 
 const kakaoService = {};
 kakaoService.getKakaoOauthAuthorizeUrl = function() {
@@ -71,6 +72,16 @@ kakaoService.login = async (code) => {
         }
     });
 
+    const user_type = await UserType.findOrCreate({
+        where: {
+            type: "KAKAO"
+        }
+    }).then((res) => {
+        return res[0];
+    });
+
+    console.log(user_type.type);
+
     // 회원이 없다면 생성
     if (kakao_user === 0) {
         KakaoUser.create({
@@ -78,6 +89,7 @@ kakaoService.login = async (code) => {
             nickname: user_info.kakao_account.profile.nickname,
             thumbnail_image_url: user_info.kakao_account.profile.thumbnail_image_url,
             profile_image_url: user_info.kakao_account.profile.profile_image_url,
+            user_type_id: user_type.id,
         });
     
         KakaoToken.create({
@@ -97,6 +109,7 @@ kakaoService.login = async (code) => {
                 nickname: user_info.kakao_account.profile.nickname,
                 thumbnail_image_url: user_info.kakao_account.profile.thumbnail_image_url,
                 profile_image_url: user_info.kakao_account.profile.profile_image_url,
+                user_type_id: user_type.id,
             },
             {
                 where: {

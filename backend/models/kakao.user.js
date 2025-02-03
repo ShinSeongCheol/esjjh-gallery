@@ -43,5 +43,13 @@ module.exports = (sequelize, DataTypes) => {
         });
     }
 
+    KakaoUser.associate = function(models) {
+        KakaoUser.belongsTo(models.UserType, {
+            targetKey: 'id',
+            foreignKey: 'user_type_id',
+            onDelete: 'CASCADE',
+        });
+    }
+
     return KakaoUser;
 };
