@@ -7,8 +7,6 @@ function Nav() {
 
     const signupButtonClick = () => {
         navigate('/signin');
-        // let kakao_login_url = import.meta.env.VITE_BACKEND_URL + '/kakao/login'; 
-        // window.open(kakao_login_url, "_parent");
     }
 
     return(
@@ -20,7 +18,6 @@ function Nav() {
                 
                 <Button className='link-dark link-underline link-underline-opacity-0' variant='link'  onClick={signupButtonClick}>
                     로그인
-                    {/* <Image src={'/button/kakao_login_small.png'}></Image> */}
                 </Button>
             </Container>
         </Navbar>

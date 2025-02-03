@@ -1,6 +1,12 @@
 import { Container, Row, Col, Form, Image, FloatingLabel, Button} from "react-bootstrap";
 
 function Signin() {
+
+    const click_kakao_button = () => {
+        let kakao_login_url = import.meta.env.VITE_BACKEND_URL + '/kakao/login'; 
+        window.open(kakao_login_url, "_parent");
+    }
+
     return(
         <>
             <Container className="vh-100 bg-light" fluid>
@@ -29,7 +35,7 @@ function Signin() {
                         <hr />
                         <Row>
                             <div className="d-grid">
-                                <Button variant="link"><Image src={'/button/kakao_login_medium_wide.png'}></Image></Button>
+                                <Button variant="link" onClick={click_kakao_button}><Image src={'/button/kakao_login_medium_wide.png'}></Image></Button>
                             </div>
                         </Row>
                         <Row>
