@@ -5,7 +5,10 @@ var logger = require('morgan');
 const db = require('./models');
 const sequelize = db.sequelize;
 
-sequelize.sync({ force: false })
+sequelize.sync({ 
+  force: false,
+  alter: true
+  })
   .then(() => {
     console.log('데이터베이스 연결 성공');
   })
