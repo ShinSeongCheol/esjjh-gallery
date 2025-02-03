@@ -1,4 +1,4 @@
-import { Container, Navbar, Image } from 'react-bootstrap';
+import { Container, Navbar, Image, Button } from 'react-bootstrap';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 function Nav() {
@@ -18,10 +18,10 @@ function Nav() {
                     <Image src='/logo/esjjh.png' width={150}/>
                 </Navbar.Brand>
                 
-                <button className='btn btn-outline-primary' onClick={signupButtonClick}>
+                <Button className='link-dark link-underline link-underline-opacity-0' variant='link'  onClick={signupButtonClick}>
                     로그인
                     {/* <Image src={'/button/kakao_login_small.png'}></Image> */}
-                </button>
+                </Button>
             </Container>
         </Navbar>
     )
