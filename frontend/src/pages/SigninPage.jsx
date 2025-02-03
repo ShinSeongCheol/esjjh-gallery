@@ -1,22 +1,42 @@
-import { Container, Row, Col, Form} from "react-bootstrap";
-import Nav from "../components/Nav";
+import { Container, Row, Col, Form, Image, FloatingLabel, Button} from "react-bootstrap";
 
 function Signin() {
     return(
         <>
-            <Container className="vh-100">
-                <Row className="h-100">
-                    <Col className="d-flex justify-content-center align-items-center">
-                        <Form className="border border-primary rounded p-4">
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control type="email" placeholder="name@example.com" />
-                            </Form.Group>
-                            <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-                                <Form.Label>Example textarea</Form.Label>
-                                <Form.Control as="textarea" rows={3} />
-                            </Form.Group>
+            <Container className="vh-100 bg-light" fluid>
+                <Row className="h-100 d-flex justify-content-center align-items-center">
+                    <Col className="border p-4 bg-body shadow-sm text-center" xs={10} sm={8} md={{ span:6 }} lg={{span:4}} xl={{span:4}}>
+                        <Image src='/logo/esjjh.png' width={250}/>
+                        <Form className="mt-3">
+                            <Row className="mb-3">
+                                <FloatingLabel className="" controlId="floatingInput" label="아이디">
+                                    <Form.Control type="text" placeholder="id"></Form.Control>
+                                </FloatingLabel>
+                            </Row>
+
+                            <Row className="mb-3">
+                                <FloatingLabel className="" controlId="floatingPassword" label="비밀번호">
+                                    <Form.Control type="password" placeholder="password"></Form.Control>
+                                </FloatingLabel>
+                            </Row>
+                            
                         </Form>
+                        <Row>
+                            <div className="d-grid">
+                                <Button variant="primary" size="lg">로그인</Button>
+                            </div>
+                        </Row>
+                        <hr />
+                        <Row>
+                            <div className="d-grid">
+                                <Button variant="link"><Image src={'/button/kakao_login_medium_wide.png'}></Image></Button>
+                            </div>
+                        </Row>
+                        <Row>
+                            <div className="text-start">
+                                <Button className="link-secondary link-underline link-underline-opacity-0" variant="link">회원가입</Button>
+                            </div>
+                        </Row>
                     </Col>
                 </Row>
             </Container>
