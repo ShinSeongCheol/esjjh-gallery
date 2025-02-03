@@ -5,7 +5,7 @@ function Signin() {
         <>
             <Container className="vh-100 bg-light" fluid>
                 <Row className="h-100 d-flex justify-content-center align-items-center">
-                    <Col className="border p-4 bg-body shadow-sm text-center" xs={10} sm={8} md={{ span:6 }} lg={{span:4}} xl={{span:4}}>
+                    <Col className="border p-4 bg-body shadow-sm text-center" xs={10} sm={8} md={{ span:6 }} lg={{span:5}} xl={{span:4}}>
                         <Image src='/logo/esjjh.png' width={250}/>
                         <Form className="mt-3">
                             <Row className="mb-3">
