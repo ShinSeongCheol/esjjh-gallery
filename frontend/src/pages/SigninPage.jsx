@@ -1,6 +1,13 @@
 import { Container, Row, Col, Form, Image, FloatingLabel, Button} from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 
 function Signin() {
+
+    const navigate = useNavigate();
+
+    const click_signup_button = () => {
+        navigate('/signup');
+    }
 
     const click_kakao_button = () => {
         let kakao_login_url = import.meta.env.VITE_BACKEND_URL + '/kakao/login'; 
@@ -40,7 +47,7 @@ function Signin() {
                         </Row>
                         <Row>
                             <div className="text-start">
-                                <Button className="link-secondary link-underline link-underline-opacity-0" variant="link">회원가입</Button>
+                                <Button className="link-secondary link-underline link-underline-opacity-0" variant="link" onClick={click_signup_button}>회원가입</Button>
                             </div>
                         </Row>
                     </Container>
