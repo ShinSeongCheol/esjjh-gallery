@@ -9,9 +9,9 @@ function Signin() {
 
     return(
         <>
-            <Container className="vh-100 bg-light" fluid>
-                <Row className="h-100 d-flex justify-content-center align-items-center">
-                    <Col className="border p-4 bg-body shadow-sm text-center" xs={12} sm={8} md={{ span:6 }} lg={{span:5}} xl={{span:4}}>
+            <Container className="vh-100 p-0 bg-light d-flex justify-content-center align-items-md-center" fluid>
+                <Col className="border p-4 bg-body shadow-sm text-center d-flex flex-column justify-content-center align-items-center" xs={12} lg={5} xl={4}>
+                    <Container fluid>
                         <Image src='/logo/esjjh.png' width={250}/>
                         <Form className="mt-3">
                             <Row className="mb-3">
@@ -43,8 +43,8 @@ function Signin() {
                                 <Button className="link-secondary link-underline link-underline-opacity-0" variant="link">회원가입</Button>
                             </div>
                         </Row>
-                    </Col>
-                </Row>
+                    </Container>
+                </Col>
             </Container>
         </>
     )
