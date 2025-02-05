@@ -41,8 +41,8 @@ function Signin() {
                         </Row>
                         <hr />
                         <Row>
-                            <div className="d-grid">
-                                <Button variant="link" onClick={click_kakao_button}><Image src={'/button/kakao_login_medium_wide.png'}></Image></Button>
+                            <div className="d-grid ">
+                                <Button style={{backgroundColor: "#fee500", fontSize: "16px"}} className="d-flex justify-content-center align-items-center" variant="" onClick={click_kakao_button} size="lg"><Image className="m-1" src={'/logo/kakao_logo.png'} width={20}/>카카오 로그인</Button>
                             </div>
                         </Row>
                         <Row>
