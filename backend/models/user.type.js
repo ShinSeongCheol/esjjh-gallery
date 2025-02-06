@@ -33,5 +33,13 @@ module.exports = (sequelize, DataTypes) => {
         });
     }
 
+    UserType.associate = function(models) {
+        UserType.hasMany(models.User, {
+            sourceKey: 'id',
+            foreignKey: 'user_type_id',
+            onDelete: 'CASCADE',
+        });
+    }
+
     return UserType;
 };
