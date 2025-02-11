@@ -34,7 +34,12 @@ function Signup() {
                         <Image src='/logo/esjjh.png' width={250}/>
                         <Form className="mt-3" id="signupForm" onSubmit={click_signup_button}>
 
-                            <Form.Control className="mb-3" type="file" name="profile_image"></Form.Control>
+                            <Form.Group className="mb-3" as={Row}>
+                                <Form.Label className="" column sm={2}>이미지</Form.Label>
+                                <Col sm={10}>
+                                    <Form.Control className="mb-3" type="file" name="profile_image"></Form.Control>
+                                </Col>
+                            </Form.Group>
 
                             <FloatingLabel className="mb-3" controlId="user_id"  label="아이디">
                                 <Form.Control type="text" placeholder="id" name="id"></Form.Control>
@@ -42,6 +47,10 @@ function Signup() {
 
                             <FloatingLabel className="mb-3" controlId="user_pw" label="비밀번호">
                                 <Form.Control type="password" placeholder="password" name="password"></Form.Control>
+                            </FloatingLabel>
+
+                            <FloatingLabel className="mb-3" controlId="user_confirm_pw" label="비밀번호 확인">
+                                <Form.Control type="password" placeholder="password" name="password_confirm"></Form.Control>
                             </FloatingLabel>
 
                             <FloatingLabel className="mb-3" controlId="user_email" label="이메일">
