@@ -1,23 +1,71 @@
 import {Container, Row, Col, Form, Image, FloatingLabel, Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
+import {useEffect, useState} from "react";
 
 function Signup() {
 
     const navigate = useNavigate();
+    const [display, setDisplay] = useState('none');
+
+    useEffect(() => {
+        document.getElementById('danger_label').style.display = display;
+    }, [display]);
 
     const click_signup_button = (e) => {
         e.preventDefault();
 
         const formData = new FormData(e.target);
+        const profile_image = formData.get('profile_image');
+        const id = formData.get('id');
+        const password = formData.get('password');
+        const password_confirm = formData.get('password_confirm');
+        const email = formData.get('email');
 
-        formData.forEach((value, key) => {
-            console.log(key, value);
-        });
+        if (profile_image.name === "" && profile_image.size === 0) {
+            set_danger_message("이미지 파일을 선택해주세요.");
+            return false;
+        }
+
+        if (!id) {
+            set_danger_message("아이디를 입력해주세요.");
+            document.getElementById('user_id').focus();
+            return false;
+        }
+
+        if (!password) {
+            set_danger_message("비밀번호를 입력해주세요.");
+            document.getElementById('user_pw').focus();
+            return false;
+        }
+
+        if (!password_confirm) {
+            set_danger_message("비밀번호 확인을 입력해주세요.");
+            document.getElementById('user_confirm_pw').focus();
+            return false;
+        }
+
+        if (password !== password_confirm) {
+            set_danger_message("비밀번호를 확인해주세요.");
+            document.getElementById('user_confirm_pw').focus();
+            return false;
+        }
+
+        if (!email) {
+            set_danger_message("이메일을 입력해주세요.");
+            document.getElementById('user_email').focus();
+            return false;
+        }
 
         let signup_url = import.meta.env.VITE_BACKEND_URL + '/user/signup';
         axios.post(signup_url, formData);
 
+    }
+
+    const set_danger_message = (message) => {
+        setDisplay('block');
+        const danger_label = document.getElementById('danger_label')
+        danger_label.textContent = message;
     }
 
     const click_login_button = () => {
@@ -37,7 +85,7 @@ function Signup() {
                             <Form.Group className="mb-3" as={Row}>
                                 <Form.Label className="" column sm={2}>이미지</Form.Label>
                                 <Col sm={10}>
-                                    <Form.Control className="mb-3" type="file" name="profile_image"></Form.Control>
+                                    <Form.Control className="mb-3" type="file" id="profile_image" name="profile_image"></Form.Control>
                                 </Col>
                             </Form.Group>
 
@@ -57,9 +105,11 @@ function Signup() {
                                 <Form.Control type="email" placeholder="email" name="email"></Form.Control>
                             </FloatingLabel>
 
-                            <div className="d-grid">
-                                <Button variant="primary" size="lg" type="submit">회원 가입</Button>
+                            <div className="d-grid text-start">
+                                <Button className="mb-3" variant="primary" size="lg" type="submit">회원 가입</Button>
+                                <Form.Label className="text-start text-danger" id="danger_label"></Form.Label>
                             </div>
+
 
                             <hr/>
 
