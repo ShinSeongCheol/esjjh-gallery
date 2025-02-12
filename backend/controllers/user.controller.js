@@ -16,10 +16,13 @@ userController.signup = async (req, res, next) => {
             profile_image: req.file
         }
 
-        const result = await userService.signup(user);
+        const token = await userService.signup(user);
 
-        res.json(result)
+        res.cookie('refresh_token', token.refresh_token, {httpOnly: true, sameSite: 'strict'});
+        res.json({"access_token":token.access_token});
     }catch(err) {
+        console.log(err);
+
         res.status(400).json(err);
     }
 }

@@ -2,6 +2,7 @@ const db = require('../models');
 const { where } = require('sequelize');
 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 const UserType = db.UserType;
 const User = db.User;
@@ -23,7 +24,7 @@ userService.signup = async function (user) {
     });
 
     // 등록된 회원 있는지 확인
-    const singend_user = await User.count({
+    const signed_user = await User.count({
         where: {
             user_id: user.id,
         }
@@ -32,7 +33,7 @@ userService.signup = async function (user) {
     });
 
     // 등록된 회원이 없다면 유저 생성
-    if (singend_user === 0) {
+    if (signed_user === 0) {
         // 비밀번호 암호화
         const salt = bcrypt.genSaltSync(10);
         const hashed_password = bcrypt.hashSync(user.password, salt);
@@ -55,12 +56,25 @@ userService.signup = async function (user) {
             destination: user.profile_image.destination,
             file_name: user.profile_image.filename,
         });
-        
+
+        //jwt access token 생성
+        const access_token = jwt.sign({id: signed_user.id}, process.env.JWT_SECRET, {
+            algorithm: 'HS256',
+            expiresIn: process.env.JWT_ACCESS_EXPIRES,
+        });
+
+        const refresh_token = jwt.sign({id: signed_user.id}, process.env.JWT_SECRET, {
+            algorithm: 'HS256',
+            expiresIn: process.env.JWT_REFRESH_EXPIRES,
+        });
+
+        return {
+            access_token,
+            refresh_token,
+        }
     }else {
         throw new userException.signedUserException("등록된 회원이 존재합니다.");
     }
-
-    return user;
 }
 
 module.exports = userService;

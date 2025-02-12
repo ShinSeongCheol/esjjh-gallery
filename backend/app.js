@@ -29,7 +29,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors({
-  origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN
+  origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN,
+  credentials: true
 }))
 
 // app.use('/users', usersRouter);
