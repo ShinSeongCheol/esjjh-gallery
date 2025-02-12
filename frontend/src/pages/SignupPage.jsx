@@ -58,8 +58,15 @@ function Signup() {
         }
 
         let signup_url = import.meta.env.VITE_BACKEND_URL + '/user/signup';
-        axios.post(signup_url, formData);
-
+        axios.post(signup_url, formData)
+            .then(res => {
+                navigate('/');
+            })
+            .catch(err => {
+                if (err.response.data.name === 'SignedUserException') {
+                    set_danger_message(err.response.data.message);
+                }
+            });
     }
 
     const set_danger_message = (message) => {
