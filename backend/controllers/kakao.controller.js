@@ -2,7 +2,6 @@ const kakaoService = require('../services/kakao.service');
 
 const login = (req, res, next) => {
     const kakao_oauth_authorize_url = kakaoService.getKakaoOauthAuthorizeUrl();
-    res.setHeader('Access-Control-Allow-origin', process.env.ACCESS_CONTROL_ALLOW_ORIGIN);
     res.redirect(kakao_oauth_authorize_url);
 }
 
