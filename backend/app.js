@@ -4,6 +4,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const db = require('./models');
 const sequelize = db.sequelize;
+const cors = require('cors');
 
 sequelize.sync({ 
   force: false,
@@ -27,6 +28,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(cors({
+  origin: process.env.ACCESS_CONTROL_ALLOW_ORIGIN
+}))
 
 // app.use('/users', usersRouter);
 app.use('/upload', uploadRouter);
