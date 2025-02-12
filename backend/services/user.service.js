@@ -7,7 +7,7 @@ const UserType = db.UserType;
 const User = db.User;
 const UserProfileImage = db.UserProfileImage;
 
-const userException = require('./exceptions/user.exception');
+const userException = require('../exceptions/user.exception');
 
 const userService = {};
 userService.signup = async function (user) {
