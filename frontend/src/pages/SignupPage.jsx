@@ -58,8 +58,11 @@ function Signup() {
         }
 
         let signup_url = import.meta.env.VITE_BACKEND_URL + '/user/signup';
-        axios.post(signup_url, formData)
+        axios.post(signup_url, formData, {
+            withCredentials: true
+        })
             .then(res => {
+                localStorage.setItem("access_token", res.data.access_token);
                 navigate('/');
             })
             .catch(err => {
