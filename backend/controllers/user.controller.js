@@ -15,12 +15,12 @@ userController.signup = async (req, res, next) => {
             email: req.body.email,
             profile_image: req.file
         }
-    
+
         const result = await userService.signup(user);
-    
+
         res.json(result)
     }catch(err) {
-        res.json(err);
+        res.status(400).json(err);
     }
 }
 
