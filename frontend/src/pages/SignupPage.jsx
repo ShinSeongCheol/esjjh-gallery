@@ -7,6 +7,7 @@ function Signup() {
 
     const navigate = useNavigate();
     const [display, setDisplay] = useState('none');
+    const [profileImage, setProfileImage] = useState('');
 
     useEffect(() => {
         document.getElementById('danger_label').style.display = display;
@@ -82,6 +83,21 @@ function Signup() {
         navigate('/signin');
     }
 
+    //파일 등록 변경 함수
+    const change_profile_image = (e) => {
+        const profile_image = e.target.files[0];
+
+        if (profile_image) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if(reader.readyState === 2) {
+                    setProfileImage(reader.result);
+                }
+            };
+            reader.readAsDataURL(profile_image);
+        }
+    }
+
     return (
         <>
             <Container className="vh-100 p-0 bg-light d-flex justify-content-center align-items-md-center" fluid>
@@ -92,11 +108,15 @@ function Signup() {
                         <Image src='/logo/esjjh.png' width={250}/>
                         <Form className="mt-3" id="signupForm" onSubmit={click_signup_button}>
 
-                            <Form.Group className="mb-3" as={Row}>
-                                <Form.Label className="" column sm={2}>이미지</Form.Label>
-                                <Col sm={10}>
-                                    <Form.Control className="mb-3" type="file" id="profile_image" name="profile_image"></Form.Control>
-                                </Col>
+                            <Form.Control className="" style={{display:"none"}} type="file" id="profile_image" name="profile_image" onChange={change_profile_image}></Form.Control>
+                                <Form.Label className="" column={true} xs={6} sm={4} lg={8} xl={6} htmlFor="profile_image">
+                                    <Row className="mb-3 border rounded bg-light overflow-hidden " style={{height:"180px"}} >
+                                        <Image className={"p-0"} src={profileImage ? profileImage : ''}/>
+                                    </Row>
+                                    <Row className="text-center"><p>프로파일 이미지</p></Row>
+                                </Form.Label>
+                            <Form.Group>
+
                             </Form.Group>
 
                             <FloatingLabel className="mb-3" controlId="user_id"  label="아이디">
@@ -119,7 +139,6 @@ function Signup() {
                                 <Button className="mb-3" variant="primary" size="lg" type="submit">회원 가입</Button>
                                 <Form.Label className="text-start text-danger" id="danger_label"></Form.Label>
                             </div>
-
 
                             <hr/>
 
