@@ -108,15 +108,14 @@ function Signup() {
                         <Image src='/logo/esjjh.png' width={250}/>
                         <Form className="mt-3" id="signupForm" onSubmit={click_signup_button}>
 
-                            <Form.Control className="" style={{display:"none"}} type="file" id="profile_image" name="profile_image" onChange={change_profile_image}></Form.Control>
+                            <Form.Group className={""}>
+                                <Form.Control className="" style={{display:"none"}} type="file" id="profile_image" name="profile_image" onChange={change_profile_image}></Form.Control>
                                 <Form.Label className="" column={true} xs={6} sm={4} lg={8} xl={6} htmlFor="profile_image">
-                                    <Row className="mb-3 border rounded bg-light overflow-hidden " style={{height:"180px"}} >
-                                        <Image className={"p-0"} src={profileImage ? profileImage : ''}/>
+                                    <Row className="mb-3 text-center" >
+                                        <p className={"ratio ratio-4x3 border rounded bg-light overflow-hidden"}><Image className={"p-0 "} src={profileImage ? profileImage : '/button/Default-Profile.png'}/></p>
                                     </Row>
-                                    <Row className="text-center"><p>프로파일 이미지</p></Row>
+                                    <Row className=""><p>프로파일 이미지</p></Row>
                                 </Form.Label>
-                            <Form.Group>
-
                             </Form.Group>
 
                             <FloatingLabel className="mb-3" controlId="user_id"  label="아이디">
