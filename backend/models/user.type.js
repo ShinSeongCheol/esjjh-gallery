@@ -10,6 +10,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             type: {
                 type: DataTypes.STRING(16),
+                unique: true,
                 allowNull: false,
                 comment: "로그인 서비스 종류",
             }
@@ -24,14 +25,6 @@ module.exports = (sequelize, DataTypes) => {
             collate: 'utf8_general_ci'
         }
     );
-
-    UserType.associate = function(models) {
-        UserType.hasMany(models.KakaoUser, {
-            sourceKey: 'id',
-            foreignKey: 'user_type_id',
-            onDelete: 'CASCADE',
-        });
-    }
 
     UserType.associate = function(models) {
         UserType.hasMany(models.User, {

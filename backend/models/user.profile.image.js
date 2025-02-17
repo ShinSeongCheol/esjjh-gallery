@@ -6,12 +6,12 @@ module.exports = (sequelize, DataTypes) => {
                 type: DataTypes.BIGINT,
                 autoIncrement: true,
                 primaryKey: true,
-                comment: "ID",
+                comment: "유저 프로파일 이미지 ID",
             },
             original_name: {
                 type: DataTypes.STRING(64),
                 allowNull: false,
-                comment: "오리지널 사진 명",
+                comment: "원본 사진 명",
             },
             encoding: {
                 type: DataTypes.STRING(8),

@@ -3,11 +3,10 @@ module.exports = (sequelize, DataTypes) => {
         "KakaoToken",
         {
             id: {
-                type: DataTypes.INTEGER,
+                type: DataTypes.BIGINT,
                 autoIncrement: true,
                 primaryKey: true,
-                allowNull: false,
-                comment: "ID",
+                comment: "카카오 토큰 ID",
             },
             token_type: {
                 type: DataTypes.STRING(8),
@@ -52,9 +51,9 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     KakaoToken.associate = function(models) {
-        KakaoToken.belongsTo(models.KakaoUser, {
+        KakaoToken.belongsTo(models.User, {
             targetKey: 'id',
-            foreignKey: 'kakao_user_id',
+            foreignKey: 'user_id',
             onDelete: 'CASCADE',
         });
     }

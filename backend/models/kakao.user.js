@@ -1,17 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
     const KakaoUser = sequelize.define(
-        "KakaoUser",
+        "KakaoAccount",
         {
             id: {
                 type: DataTypes.BIGINT,
                 primaryKey: true,
-                allowNull: false,
-                comment: "카카오 회원 번호 ID",
+                autoIncrement: true,
+                comment: "카카오 계정 ID",
             },
-            nickname: {
-                type: DataTypes.STRING(16),
-                allowNull: false,
-                comment: "닉네임",
+            account_id: {
+              type: DataTypes.BIGINT,
+              unique: true,
+              allowNull: false,
+              comment: "카카오 고유 회원 ID"
             },
             thumbnail_image_url: {
                 type: DataTypes.STRING(128),
@@ -26,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         },
         {
             freezeTableName: true,
-            tableName: 'kakao_user_tb',
+            tableName: 'kakao_account_tb',
             timestamps: true,
             createdAt: 'created_at',
             updatedAt: 'updated_at',
@@ -36,17 +37,9 @@ module.exports = (sequelize, DataTypes) => {
     );
 
     KakaoUser.associate = function(models) {
-        KakaoUser.hasOne(models.KakaoToken, {
-            sourceKey: 'id',
-            foreignKey: 'kakao_user_id',
-            onDelete: 'CASCADE',
-        });
-    }
-
-    KakaoUser.associate = function(models) {
-        KakaoUser.belongsTo(models.UserType, {
+        KakaoUser.belongsTo(models.User, {
             targetKey: 'id',
-            foreignKey: 'user_type_id',
+            foreignKey: 'user_id',
             onDelete: 'CASCADE',
         });
     }

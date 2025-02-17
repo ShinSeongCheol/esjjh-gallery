@@ -8,21 +8,22 @@ module.exports = (sequelize, DataTypes) => {
                 primaryKey: true,
                 comment: "ID",
             },
-            user_id: {
+            email: {
                 type: DataTypes.STRING(32),
+                unique: true,
                 allowNull: false,
-                comment: "USER ID",
+                comment: "EMAIL",
+            },
+            nickname: {
+                type: DataTypes.STRING(16),
+                allowNull: false,
+                comment: "EMAIL",
             },
             password: {
                 type: DataTypes.STRING(128),
                 allowNull: false,
                 comment: "PASSWORD",
             },
-            email: {
-                type: DataTypes.STRING(32),
-                allowNull: false,
-                comment: "EMAIL",
-            }
         },
         {
             freezeTableName: true,
@@ -44,12 +45,28 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     User.associate = function(models) {
+        User.hasOne(models.KakaoAccount, {
+            sourceKey: 'id',
+            foreignKey: 'user_id',
+            onDelete: 'CASCADE'
+        });
+    }
+
+    User.associate = function(models) {
         User.hasOne(models.UserProfileImage, {
             sourceKey: 'id',
             foreignKey: 'user_id',
             onDelete: 'CASCADE'
         });
     };
+
+    User.associate = function(models) {
+        User.hasOne(models.KakaoToken, {
+            sourceKey: 'id',
+            foreignKey: 'user_id',
+            onDelete: 'CASCADE'
+        });
+    }
 
     return User;
 }
