@@ -31,7 +31,7 @@ kakaoService.getToken = async function(code) {
         'client_id': kakao_client_id,
         'redirect_uri': kakao_token_redirect_uri,
         'code': code,
-    }, 
+    },
     {
         headers: {'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',}
     }).then((response) => {
@@ -79,8 +79,6 @@ kakaoService.login = async (code) => {
     }).then((res) => {
         return res[0];
     });
-
-    console.log(user_type.type);
 
     // 회원이 없다면 생성
     if (kakao_user === 0) {
