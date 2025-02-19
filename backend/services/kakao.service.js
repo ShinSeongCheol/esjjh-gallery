@@ -1,3 +1,7 @@
+const path = require('path');
+const dotenv = require('dotenv');
+dotenv.config({path: path.join(__dirname,'../envs', 'kakao.env')});
+
 const axios = require('axios');
 const db = require('../models');
 const { where } = require('sequelize');

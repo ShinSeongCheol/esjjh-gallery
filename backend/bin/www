@@ -4,10 +4,14 @@
  * Module dependencies.
  */
 
+const path = require('path')
+const dotenv = require('dotenv')
+dotenv.config({path: path.join(__dirname, '../envs', 'express.env')})
+
 var app = require('../app');
 var debug = require('debug')('server:server');
 var http = require('http');
-require('dotenv').config();
+
 
 /**
  * Get port from environment and store in Express.
