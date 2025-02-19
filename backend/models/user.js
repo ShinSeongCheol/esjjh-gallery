@@ -45,28 +45,12 @@ module.exports = (sequelize, DataTypes) => {
     };
 
     User.associate = function(models) {
-        User.hasOne(models.KakaoAccount, {
-            sourceKey: 'id',
-            foreignKey: 'user_id',
-            onDelete: 'CASCADE'
-        });
-    }
-
-    User.associate = function(models) {
         User.hasOne(models.UserProfileImage, {
             sourceKey: 'id',
             foreignKey: 'user_id',
             onDelete: 'CASCADE'
         });
     };
-
-    User.associate = function(models) {
-        User.hasOne(models.KakaoToken, {
-            sourceKey: 'id',
-            foreignKey: 'user_id',
-            onDelete: 'CASCADE'
-        });
-    }
 
     return User;
 }
