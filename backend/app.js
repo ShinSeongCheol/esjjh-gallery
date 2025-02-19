@@ -6,24 +6,6 @@ const db = require('./models');
 const sequelize = db.sequelize;
 const cors = require('cors');
 
-const redis = require('redis');
-const dotenv = require('dotenv');
-dotenv.config({ path: path.join(__dirname, 'envs', 'redis.env') });
-
-const redis_client = redis.createClient({
-  url: `redis://${process.env.REDIS_USER}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}/0`,
-  legacyMode: true
-});
-
-redis_client.on('connect', () => {
-  console.info('Redis connected!');
-});
-redis_client.on('error', (err) => {
-  console.error('Redis Client Error', err);
-});
-
-redis_client.connect().then();
-
 sequelize.sync({
   force: true
   })

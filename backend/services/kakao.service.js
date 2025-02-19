@@ -1,12 +1,13 @@
 const path = require('path');
+const axios = require('axios');
 const dotenv = require('dotenv');
 dotenv.config({path: path.join(__dirname,'../envs', 'kakao.env')});
 
-const axios = require('axios');
+const jwtService = require('./jwt.service');
+const redisService = require('./redis.service');
 const db = require('../models');
-const { where } = require('sequelize');
-const KakaoUser = db.KakaoUser;
-const KakaoToken = db.KakaoToken;
+const bcrypt = require("bcrypt");
+const User = db.User;
 const UserType = db.UserType;
 
 const kakaoService = {};
@@ -69,75 +70,70 @@ kakaoService.login = async (code) => {
     const token = await kakaoService.getToken(code);
     const user_info = await kakaoService.getUserInfo(token);
 
+    const kakao_access_token = token.access_token;
+    const id = user_info.id;
+    const nickname = user_info.kakao_account.profile.nickname;
+    const profil_image_url = user_info.kakao_account.profile.profile_image_url;
+    const email = user_info.kakao_account.email;
+
+    console.log(profil_image_url);
+
+    //jwt access token, refresh toekn 생성
+    const access_token = jwtService.generateAccessToken(id);
+    const refresh_token = jwtService.generateRefreshToken(id);
+
+    // redis 에 refresh token 저장
+    const redis_client = await redisService.getRedisClient();
+
+    // 기존 값 삭제 후 추가
+    await redis_client.del(email);
+    await redis_client.hSet(email, 'refresh_token', refresh_token);
+
     // 등록된 회원 있는지 확인
-    const kakao_user = await KakaoUser.count({
+    const user_cnt = await User.count({
         where: {
-            id: user_info.id,
+            email: email,
         }
+    }).catch((err) => {
+        console.error(err)
     });
 
-    const user_type = await UserType.findOrCreate({
-        where: {
-            type: "KAKAO"
-        }
-    }).then((res) => {
-        return res[0];
-    });
+    // 비밀번호 생성
+    const salt = bcrypt.genSaltSync(10);
+    const hashed_password = bcrypt.hashSync(access_token, salt);
 
-    // 회원이 없다면 생성
-    if (kakao_user === 0) {
-        KakaoUser.create({
-            id: user_info.id,
-            nickname: user_info.kakao_account.profile.nickname,
-            thumbnail_image_url: user_info.kakao_account.profile.thumbnail_image_url,
-            profile_image_url: user_info.kakao_account.profile.profile_image_url,
+    // 등록되지 않았다면 회원 생성
+    if (user_cnt === 0) {
+        const user_type = await UserType.findOrCreate({
+            where: {
+                type: "KAKAO"
+            }
+        }).then((res) => {
+            return res[0];
+        });
+
+        User.create({
+            email: email,
+            nickname: nickname,
+            password: hashed_password,
             user_type_id: user_type.id,
         });
-    
-        KakaoToken.create({
-            kakao_user_id: user_info.id,
-            token_type: token.token_type,
-            access_token: token.access_token,
-            expires_in: token.expires_in,
-            refresh_token: token.refresh_token,
-            refresh_token_expires_in: token.refresh_token_expires_in,
-            scope: token.scope,
-        });
-    }
-    // 회원이 있다면 업데이트
-    else { 
-        KakaoUser.update(
+    // 등록 되었다면 회원 수정
+    }else {
+        User.update(
             {
-                nickname: user_info.kakao_account.profile.nickname,
-                thumbnail_image_url: user_info.kakao_account.profile.thumbnail_image_url,
-                profile_image_url: user_info.kakao_account.profile.profile_image_url,
-                user_type_id: user_type.id,
+                nickname: nickname,
+                password: hashed_password,
             },
             {
                 where: {
-                    id: user_info.id,
+                    email: email,
                 }
             }
-        )
-
-        KakaoToken.update(
-            {
-                token_type: token.token_type,
-                access_token: token.access_token,
-                expires_in: token.expires_in,
-                refresh_token: token.refresh_token,
-                refresh_token_expires_in: token.refresh_token_expires_in,
-                scope: token.scope,
-            },
-            {
-                where: {
-                    kakao_user_id: user_info.id,
-                }
-            }
-        )
+        );
     }
 
-    return user_info;
+    return kakao_access_token;
 }
 
 kakaoService.logout = async (token_data) => {
