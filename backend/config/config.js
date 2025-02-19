@@ -1,4 +1,6 @@
-require('dotenv').config()
+const dotenv = require('dotenv');
+const path = require("node:path");
+dotenv.config({ path: path.join(__dirname, '../envs', 'database.env') });
 
 const development = {
   "username": process.env.DB_USER,

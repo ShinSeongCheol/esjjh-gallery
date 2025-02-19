@@ -8,7 +8,7 @@ const cors = require('cors');
 
 const redis = require('redis');
 const dotenv = require('dotenv');
-dotenv.config({ path: path.join(__dirname, '.env.redis') });
+dotenv.config({ path: path.join(__dirname, 'envs', 'redis.env') });
 
 const redis_client = redis.createClient({
   url: `redis://${process.env.REDIS_USER}:${process.env.REDIS_PASSWORD}@${process.env.REDIS_HOST}:${process.env.REDIS_PORT}/0`,
