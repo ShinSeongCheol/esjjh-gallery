@@ -4,7 +4,6 @@ const dotenv = require('dotenv');
 dotenv.config({path: path.join(__dirname,'../envs', 'kakao.env')});
 
 const jwtService = require('./jwt.service');
-const redisService = require('./redis.service');
 const db = require('../models');
 const bcrypt = require("bcrypt");
 const User = db.User;
@@ -76,18 +75,9 @@ kakaoService.login = async (code) => {
     const profil_image_url = user_info.kakao_account.profile.profile_image_url;
     const email = user_info.kakao_account.email;
 
-    console.log(profil_image_url);
-
     //jwt access token, refresh toekn 생성
     const access_token = jwtService.generateAccessToken(id);
     const refresh_token = jwtService.generateRefreshToken(id);
-
-    // redis 에 refresh token 저장
-    const redis_client = await redisService.getRedisClient();
-
-    // 기존 값 삭제 후 추가
-    await redis_client.del(email);
-    await redis_client.hSet(email, 'refresh_token', refresh_token);
 
     // 등록된 회원 있는지 확인
     const user_cnt = await User.count({
@@ -133,7 +123,13 @@ kakaoService.login = async (code) => {
         );
     }
 
-    return kakao_access_token;
+    const user = {
+        email: email,
+        access_token: access_token,
+        refresh_token: refresh_token,
+    }
+
+    return user;
 }
 
 kakaoService.logout = async (token_data) => {

@@ -21,6 +21,15 @@ const getRedisClient = async () => {
     return redis_client.v4;
 }
 
+const updateRefreshToken = async (user) => {
+    const redis_client = await getRedisClient();
+
+    const {email, access_token, refresh_token} = user;
+    redis_client.del(email);
+    redis_client.hSet(email, 'refresh_token', refresh_token);
+}
+
 module.exports = {
-    getRedisClient
+    getRedisClient,
+    updateRefreshToken
 }
