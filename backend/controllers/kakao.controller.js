@@ -1,4 +1,5 @@
 const kakaoService = require('../services/kakao.service');
+const redisService = require("../services/redis.service");
 
 const login = (req, res, next) => {
     const kakao_oauth_authorize_url = kakaoService.getKakaoOauthAuthorizeUrl();
@@ -8,7 +9,9 @@ const login = (req, res, next) => {
 const getCode = async (req, res, next) => {
     const query = req.query;
     const code = query.code;
-    await kakaoService.login(code);
+    const user = await kakaoService.login(code);
+    await redisService.getRedisClient(user);
+
     res.redirect(process.env.FRONT_URL);
 }
 
