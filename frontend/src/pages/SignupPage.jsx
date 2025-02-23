@@ -1,7 +1,8 @@
 import {Container, Row, Col, Form, Image, FloatingLabel, Button} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
 import {useEffect, useState} from "react";
+
+import axios from "axios";
 
 function Signup() {
 
@@ -18,7 +19,7 @@ function Signup() {
 
         const formData = new FormData(e.target);
         const profile_image = formData.get('profile_image');
-        const id = formData.get('id');
+        const nickname = formData.get('nickname');
         const password = formData.get('password');
         const password_confirm = formData.get('password_confirm');
         const email = formData.get('email');
@@ -28,9 +29,15 @@ function Signup() {
             return false;
         }
 
-        if (!id) {
-            set_danger_message("아이디를 입력해주세요.");
-            document.getElementById('user_id').focus();
+        if (!nickname) {
+            set_danger_message("닉네임을 입력해주세요.");
+            document.getElementById('user_nickname').focus();
+            return false;
+        }
+
+        if (!email) {
+            set_danger_message("이메일을 입력해주세요.");
+            document.getElementById('user_email').focus();
             return false;
         }
 
@@ -52,18 +59,11 @@ function Signup() {
             return false;
         }
 
-        if (!email) {
-            set_danger_message("이메일을 입력해주세요.");
-            document.getElementById('user_email').focus();
-            return false;
-        }
-
         let signup_url = import.meta.env.VITE_BACKEND_URL + '/user/signup';
         axios.post(signup_url, formData, {
             withCredentials: true
         })
             .then(res => {
-                localStorage.setItem("access_token", res.data.access_token);
                 navigate('/');
             })
             .catch(err => {
@@ -118,8 +118,12 @@ function Signup() {
                                 </Form.Label>
                             </Form.Group>
 
-                            <FloatingLabel className="mb-3" controlId="user_id"  label="아이디">
-                                <Form.Control type="text" placeholder="id" name="id"></Form.Control>
+                            <FloatingLabel className="mb-3" controlId="user_nickname"  label="닉네임">
+                                <Form.Control type="text" placeholder="nickname" name="nickname"></Form.Control>
+                            </FloatingLabel>
+
+                            <FloatingLabel className="mb-3" controlId="user_email" label="이메일">
+                                <Form.Control type="email" placeholder="email" name="email"></Form.Control>
                             </FloatingLabel>
 
                             <FloatingLabel className="mb-3" controlId="user_pw" label="비밀번호">
@@ -130,9 +134,6 @@ function Signup() {
                                 <Form.Control type="password" placeholder="password" name="password_confirm"></Form.Control>
                             </FloatingLabel>
 
-                            <FloatingLabel className="mb-3" controlId="user_email" label="이메일">
-                                <Form.Control type="email" placeholder="email" name="email"></Form.Control>
-                            </FloatingLabel>
 
                             <div className="d-grid text-start">
                                 <Button className="mb-3" variant="primary" size="lg" type="submit">회원 가입</Button>
