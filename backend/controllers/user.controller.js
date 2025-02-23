@@ -1,4 +1,6 @@
 const userService = require('../services/user.service');
+const jwtService = require('../services/jwt.service');
+const redisService = require('../services/redis.service');
 
 const userController = {};
 
@@ -10,16 +12,24 @@ userController.login = async (req, res, next) => {
 userController.signup = async (req, res, next) => {
     try{
         user = {
-            id: req.body.id,
+            nickname: req.body.nickname,
             password: req.body.password,
             email: req.body.email,
             profile_image: req.file
         }
 
-        const token = await userService.signup(user);
+        const user_id = await userService.signup(user);
 
-        res.cookie('refresh_token', token.refresh_token, {httpOnly: true, sameSite: 'strict'});
-        res.json({"access_token":token.access_token});
+        const access_token = jwtService.generateAccessToken(user_id);
+        const refresh_token = jwtService.generateRefreshToken(user_id);
+
+        user.access_token = access_token;
+        user.refresh_token = refresh_token;
+
+        await redisService.updateRefreshToken(user);
+
+        res.cookie({"access_token":access_token}, {sameSite: 'strict', cors: true});
+        res.status(200).json(user_id);
     }catch(err) {
         console.log(err);
 

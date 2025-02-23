@@ -26,7 +26,7 @@ userService.signup = async function (user) {
     // 등록된 회원 있는지 확인
     const signed_user = await User.count({
         where: {
-            user_id: user.id,
+            email: user.email,
         }
     }).catch((err) => {
         console.error(err)
@@ -39,7 +39,7 @@ userService.signup = async function (user) {
         const hashed_password = bcrypt.hashSync(user.password, salt);
 
         const signed_user = await User.create({
-            user_id: user.id,
+            nickname: user.nickname,
             password: hashed_password,
             email: user.email,
             user_type_id: user_type.id
@@ -57,21 +57,8 @@ userService.signup = async function (user) {
             file_name: user.profile_image.filename,
         });
 
-        //jwt access token 생성
-        const access_token = jwt.sign({id: signed_user.id}, process.env.JWT_SECRET, {
-            algorithm: 'HS256',
-            expiresIn: process.env.JWT_ACCESS_EXPIRES,
-        });
+        return signed_user.id;
 
-        const refresh_token = jwt.sign({id: signed_user.id}, process.env.JWT_SECRET, {
-            algorithm: 'HS256',
-            expiresIn: process.env.JWT_REFRESH_EXPIRES,
-        });
-
-        return {
-            access_token,
-            refresh_token,
-        }
     }else {
         throw new userException.signedUserException("등록된 회원이 존재합니다.");
     }
