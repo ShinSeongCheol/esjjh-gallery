@@ -12,8 +12,7 @@ const getCode = async (req, res, next) => {
     const user = await kakaoService.login(code);
     await redisService.getRedisClient(user);
 
-    res.cookie('access_token', user.access_token, {
-    });
+    res.cookie('access_token', user.access_token);
 
     res.redirect(process.env.FRONT_URL);
 }

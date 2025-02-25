@@ -28,7 +28,7 @@ userController.signup = async (req, res, next) => {
 
         await redisService.updateRefreshToken(user);
 
-        res.cookie({"access_token":access_token}, {sameSite: 'strict', cors: true});
+        res.cookie("access_token", access_token);
         res.status(200).json(user_id);
     }catch(err) {
         console.log(err);
