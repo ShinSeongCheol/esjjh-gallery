@@ -21,7 +21,17 @@ const generateRefreshToken = (id) => {
     return refresh_token;
 }
 
+const verifyAccessToken = (authorization) => {
+    if (!!authorization) {
+        const access_token = authorization.split(' ')[1];
+        const result = jwt.verify(access_token, process.env.JWT_SECRET, {});
+        return result.id;
+    }
+    return null;
+}
+
 module.exports = {
     generateAccessToken,
-    generateRefreshToken
+    generateRefreshToken,
+    verifyAccessToken
 }
