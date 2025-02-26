@@ -75,10 +75,6 @@ kakaoService.login = async (code) => {
     const profil_image_url = user_info.kakao_account.profile.profile_image_url;
     const email = user_info.kakao_account.email;
 
-    //jwt access token, refresh toekn 생성
-    const access_token = jwtService.generateAccessToken(id);
-    const refresh_token = jwtService.generateRefreshToken(id);
-
     // 등록된 회원 있는지 확인
     const user_cnt = await User.count({
         where: {
@@ -90,7 +86,9 @@ kakaoService.login = async (code) => {
 
     // 비밀번호 생성
     const salt = bcrypt.genSaltSync(10);
-    const hashed_password = bcrypt.hashSync(access_token, salt);
+    const hashed_password = bcrypt.hashSync(kakao_access_token, salt);
+
+    let user_id;
 
     // 등록되지 않았다면 회원 생성
     if (user_cnt === 0) {
@@ -102,11 +100,13 @@ kakaoService.login = async (code) => {
             return res[0];
         });
 
-        User.create({
+        user_id = User.create({
             email: email,
             nickname: nickname,
             password: hashed_password,
             user_type_id: user_type.id,
+        }).then((res) => {
+            return res.dataValues.id;
         });
     // 등록 되었다면 회원 수정
     }else {
@@ -118,18 +118,16 @@ kakaoService.login = async (code) => {
             {
                 where: {
                     email: email,
-                }
+                },
             }
         );
+
+        user_id = User.findOne({where: {email: email}}).then((res) => {
+            return res.dataValues.id;
+        })
     }
 
-    const user = {
-        email: email,
-        access_token: access_token,
-        refresh_token: refresh_token,
-    }
-
-    return user;
+    return user_id;
 }
 
 kakaoService.logout = async (token_data) => {
