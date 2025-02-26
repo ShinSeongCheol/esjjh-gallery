@@ -79,6 +79,7 @@ function GalleryPage() {
     for (let i = 0; i < pictures.length; i += 4) {
         chunkedPictures.push(pictures.slice(i, i + 4)); // 4개씩 자르기
     }
+
     return (
         <>
         <Nav />
