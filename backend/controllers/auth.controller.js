@@ -12,7 +12,11 @@ const isAuthenticated = async (req, res, next) => {
 
 const getAuth = async (req, res, next) => {
     const user = await userService.getUser(req.user_id);
-    console.log(user);
+    res.json({
+       id: user.id,
+       email: user.email,
+       nickname: user.nickname,
+    });
 }
 
 module.exports = {
