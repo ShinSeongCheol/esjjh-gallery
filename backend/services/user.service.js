@@ -64,4 +64,15 @@ userService.signup = async function (user) {
     }
 }
 
+userService.getUser = async function (id) {
+    const user = await User.findOne({
+        where: {
+            id: id,
+        }
+    }).then((res) => {
+        return res.dataValues;
+    });
+    return user;
+}
+
 module.exports = userService;
