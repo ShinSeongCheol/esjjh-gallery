@@ -19,6 +19,7 @@ sequelize.sync({
 const uploadRouter = require('./routes/upload');
 const kakaoRouter = require('./routes/kakao');
 const userRouter = require('./routes/user')
+const authRouter = require('./routes/auth')
 
 var app = express();
 
@@ -36,5 +37,6 @@ app.use(cors({
 app.use('/upload', uploadRouter);
 app.use('/kakao', kakaoRouter);
 app.use('/user', userRouter);
+app.use('/auth', authRouter)
 
 module.exports = app;
