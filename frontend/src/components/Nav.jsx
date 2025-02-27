@@ -25,9 +25,11 @@ function Nav() {
                 </Navbar.Brand>
 
                 {auth.id ?(
-                    auth.nickname
+                    <Button className='primary' variant='primary'  onClick={signupButtonClick}>
+                        글쓰기
+                    </Button>
                 ):(
-                    <Button className='link-dark link-underline link-underline-opacity-0' variant='link'  onClick={signupButtonClick}>
+                    <Button className='primary' variant='primary'  onClick={signupButtonClick}>
                         로그인
                     </Button>
                 )}
