@@ -3,6 +3,7 @@ const userService = require('../services/user.service');
 
 const isAuthenticated = async (req, res, next) => {
     try{
+        req.headers.authorization = `Bearer ${req.cookies['access_token']}`
         req.user_id = await jwtService.verifyAccessToken(req.get('authorization'));
         next();
     }catch (err) {

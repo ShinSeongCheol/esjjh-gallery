@@ -23,7 +23,7 @@ const getCode = async (req, res, next) => {
 
     await redisService.updateRefreshToken(user);
 
-    res.cookie('access_token', user.access_token);
+    res.cookie('access_token', user.access_token, {httpOnly: true});
 
     res.redirect(process.env.FRONT_URL);
 }
