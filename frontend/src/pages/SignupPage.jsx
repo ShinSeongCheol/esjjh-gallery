@@ -8,7 +8,6 @@ function Signup() {
 
     const navigate = useNavigate();
     const [display, setDisplay] = useState('none');
-    const [profileImage, setProfileImage] = useState('');
 
     useEffect(() => {
         document.getElementById('danger_label').style.display = display;
@@ -18,16 +17,11 @@ function Signup() {
         e.preventDefault();
 
         const formData = new FormData(e.target);
-        const profile_image = formData.get('profile_image');
         const nickname = formData.get('nickname');
         const password = formData.get('password');
         const password_confirm = formData.get('password_confirm');
         const email = formData.get('email');
 
-        if (profile_image.name === "" && profile_image.size === 0) {
-            set_danger_message("이미지 파일을 선택해주세요.");
-            return false;
-        }
 
         if (!nickname) {
             set_danger_message("닉네임을 입력해주세요.");
@@ -83,21 +77,6 @@ function Signup() {
         navigate('/signin');
     }
 
-    //파일 등록 변경 함수
-    const change_profile_image = (e) => {
-        const profile_image = e.target.files[0];
-
-        if (profile_image) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                if(reader.readyState === 2) {
-                    setProfileImage(reader.result);
-                }
-            };
-            reader.readAsDataURL(profile_image);
-        }
-    }
-
     return (
         <>
             <Container className="vh-100 p-0 bg-light d-flex justify-content-center align-items-md-center" fluid>
@@ -107,16 +86,6 @@ function Signup() {
                     <Container fluid>
                         <Image src='/logo/esjjh.png' width={250}/>
                         <Form className="mt-3" id="signupForm" onSubmit={click_signup_button}>
-
-                            <Form.Group className={""}>
-                                <Form.Control className="" style={{display:"none"}} type="file" id="profile_image" name="profile_image" onChange={change_profile_image}></Form.Control>
-                                <Form.Label className="" column={true} xs={6} sm={4} lg={8} xl={6} htmlFor="profile_image">
-                                    <Row className="mb-3 text-center" >
-                                        <p className={"ratio ratio-4x3 border rounded bg-light overflow-hidden"} style={{cursor:"pointer"}}><Image className={"p-0 "} src={profileImage ? profileImage : '/button/Default-Profile.png'}/></p>
-                                    </Row>
-                                    <Row className=""><p>프로파일 이미지</p></Row>
-                                </Form.Label>
-                            </Form.Group>
 
                             <FloatingLabel className="mb-3" controlId="user_nickname"  label="닉네임">
                                 <Form.Control type="text" placeholder="nickname" name="nickname"></Form.Control>
