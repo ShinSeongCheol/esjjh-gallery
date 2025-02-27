@@ -15,7 +15,6 @@ userController.signup = async (req, res, next) => {
             nickname: req.body.nickname,
             password: req.body.password,
             email: req.body.email,
-            profile_image: req.file
         }
 
         const user_id = await userService.signup(user);

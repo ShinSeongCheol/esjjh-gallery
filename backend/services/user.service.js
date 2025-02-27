@@ -47,16 +47,6 @@ userService.signup = async function (user) {
             return res.dataValues;
         });
 
-        UserProfileImage.create({
-            user_id: signed_user.id,
-            original_name: user.profile_image.originalname,
-            encoding: user.profile_image.encoding,
-            mime_type: user.profile_image.mimetype,
-            size: user.profile_image.size,
-            destination: user.profile_image.destination,
-            file_name: user.profile_image.filename,
-        });
-
         return signed_user.id;
 
     }else {
