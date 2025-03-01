@@ -22,15 +22,20 @@ const generateRefreshToken = (id) => {
     return refresh_token;
 }
 
-const verifyAccessToken = (authorization) => {
-    const access_token = authorization.split(' ')[1];
-    const result = jwt.verify(access_token, process.env.JWT_SECRET, {});
-    return result.id;
+const decodeToken = (authorization) => {
+    const token = authorization.split(' ')[1];
+    return jwt.decode(token, process.env.JWT_SECRET);
+}
+
+const verifyToken = (authorization) => {
+    const token = authorization.split(' ')[1];
+    return jwt.verify(token, process.env.JWT_SECRET, {});
 }
 
 
 module.exports = {
     generateAccessToken,
     generateRefreshToken,
-    verifyAccessToken
+    decodeToken,
+    verifyToken
 }

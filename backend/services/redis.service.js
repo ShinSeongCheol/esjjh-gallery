@@ -21,15 +21,29 @@ const getRedisClient = async () => {
     return redis_client.v4;
 }
 
+const getRefreshToken = async (user_id) => {
+    const redis_client = await getRedisClient();
+
+    return redis_client.hGet(user_id, 'refresh_token');
+}
+
 const updateRefreshToken = async (user) => {
     const redis_client = await getRedisClient();
 
-    const {id, access_token, refresh_token} = user;
+    const {id, refresh_token} = user;
     redis_client.del(id);
     redis_client.hSet(id, 'refresh_token', refresh_token);
 }
 
+const removeRefreshToken = async (user_id) => {
+    const redis_client = await getRedisClient();
+
+    redis_client.del(user_id);
+}
+
 module.exports = {
     getRedisClient,
-    updateRefreshToken
+    getRefreshToken,
+    updateRefreshToken,
+    removeRefreshToken,
 }
