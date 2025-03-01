@@ -6,18 +6,28 @@ const isAuthenticated = async (req, res, next) => {
         req.headers.authorization = `Bearer ${req.cookies['access_token']}`
         req.user_id = await jwtService.verifyAccessToken(req.get('authorization'));
         next();
-    }catch (err) {
-        console.error(err);
+    }catch (error) {
+        if (error.name === 'JsonWebTokenError') {
+            res.status(401).json(error)
+        }
+
+        if (error.name === 'TokenExpiredError') {
+            res.status(419).json(error)
+        }
     }
 }
 
 const getAuth = async (req, res, next) => {
-    const user = await userService.getUser(req.user_id);
-    res.json({
-       id: user.id,
-       email: user.email,
-       nickname: user.nickname,
-    });
+    try {
+        const user = await userService.getUser(req.user_id);
+        res.json({
+            id: user.id,
+            email: user.email,
+            nickname: user.nickname,
+        });
+    }catch (err) {
+        console.error(err);
+    }
 }
 
 module.exports = {

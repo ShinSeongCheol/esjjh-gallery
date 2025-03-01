@@ -1,6 +1,7 @@
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
+const {JsonWebTokenError} = require("jsonwebtoken");
 dotenv.config({path: path.join(__dirname, '../envs', 'jwt.env')});
 
 const generateAccessToken = (id) => {
@@ -22,13 +23,11 @@ const generateRefreshToken = (id) => {
 }
 
 const verifyAccessToken = (authorization) => {
-    if (!!authorization) {
-        const access_token = authorization.split(' ')[1];
-        const result = jwt.verify(access_token, process.env.JWT_SECRET, {});
-        return result.id;
-    }
-    return null;
+    const access_token = authorization.split(' ')[1];
+    const result = jwt.verify(access_token, process.env.JWT_SECRET, {});
+    return result.id;
 }
+
 
 module.exports = {
     generateAccessToken,
