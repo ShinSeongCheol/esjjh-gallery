@@ -17,13 +17,12 @@ const getCode = async (req, res, next) => {
 
     const user = {
         id: user_id,
-        access_token: access_token,
         refresh_token: refresh_token,
     }
 
     await redisService.updateRefreshToken(user);
 
-    res.cookie('access_token', user.access_token, {httpOnly: true});
+    res.cookie('access_token', access_token, {httpOnly: true});
 
     res.redirect(process.env.FRONT_URL);
 }
