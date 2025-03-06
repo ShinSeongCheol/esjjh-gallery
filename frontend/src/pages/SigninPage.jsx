@@ -63,13 +63,13 @@ function Signin() {
     return(
         <>
             <main className={"flex flex-col justify-center items-center h-screen"}>
-                <div className={"w-full h-full"}>
+                <div className={"w-full sm:max-w-lg h-full"}>
                     <div className={"flex flex-col h-full p-2"}>
-                        <Link to="/" className="flex justify-center">
-                            <img className={"h-12 w-auto"} src="/logo/esjjh.png" alt=""/>
-                        </Link>
                         <form action="" className={"flex flex-col h-full"}>
-                            <div className={"flex flex-col justify-end gap-4 grow mb-4"}>
+                            <div className={"flex flex-col sm:justify-end gap-4 sm:grow mb-4"}>
+                                <Link to="/" className="flex justify-center">
+                                    <img className={"h-12 w-auto"} src="/logo/esjjh.png" alt=""/>
+                                </Link>
                                 <input type="email" name="" id="" placeholder={"이메일"} className={"min-h-8 border-b-2 border-gray-300 focus:outline-none focus:border-black"} />
                                 <input type="password" name="" id="" placeholder={"비밀번호"} className={"min-h-8 border-b-2 border-gray-300 focus:outline-none focus:border-black"}/>
                                 <button type="submit" className={"min-h-8 bg-rose-200 hover:cursor-pointer rounded"}>로그인</button>
