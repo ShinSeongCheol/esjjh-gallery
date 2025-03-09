@@ -66,13 +66,13 @@ function Signin() {
 
                             <hr/>
 
-                            <div className={"flex flex-col gap-4 grow mt-4"} onClick={click_signup_button} >
+                            <div className={"flex flex-col gap-4 grow mt-4"}>
                                 <div className={"flex gap-2 justify-center items-center bg-[#fee500] rounded  hover:cursor-pointer"}>
                                     <img src="/logo/kakao_logo.png" alt="" className={"text-center h-4"}/>
                                     <button type="button" className={"min-h-8 hover:cursor-pointer"} onClick={click_kakao_button}>카카오 로그인</button>
                                 </div>
                                 <div className={"flex"}>
-                                    <button type="button" className={"text-xs text-gray-600 hover:cursor-pointer"}>회원가입</button>
+                                    <button type="button" className={"text-xs text-gray-600 hover:cursor-pointer"} onClick={click_signup_button}>회원가입</button>
                                 </div>
                             </div>
                         </form>
