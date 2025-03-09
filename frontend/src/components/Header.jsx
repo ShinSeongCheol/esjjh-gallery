@@ -16,7 +16,7 @@ const Header = () => {
 
     return (
         <>
-            <header className={"w-full fixed top-0 left-0 border-b-1 border-gray-300"}>
+            <header className={"bg-white w-full sticky border-b-1 border-gray-300"}>
                 <div className={"flex px-2 py-1"}>
                     <div className={"flex items-center grow"}>
                         <Link to="/" className="flex-shrink-0">
@@ -30,7 +30,7 @@ const Header = () => {
                     <div className={"flex items-center"}>
                         {
                             auth?
-                            <button className={"bg-indigo-500 hover:cursor-pointer rounded-sm w-20 h-8 text-white"} type={"button"} onClick={clickLoginButton}>{auth.nickname}</button>
+                            <button className={"bg-indigo-500 hover:cursor-pointer rounded-sm w-20 h-8 text-white"} type={"button"} onClick={clickLoginButton}>글쓰기</button>
                             :
                             <button className={"bg-indigo-500 hover:cursor-pointer rounded-sm w-20 h-8 text-white"} type={"button"} onClick={clickLoginButton}>로그인</button>
                         }
