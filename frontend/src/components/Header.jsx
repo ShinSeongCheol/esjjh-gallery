@@ -1,7 +1,10 @@
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
+import {useContext} from "react";
+import AuthContext from "../contexts/AuthContext.jsx";
 
 const Header = () => {
     const navigate = useNavigate();
+    const auth = useContext(AuthContext);
 
     const clickSearchButton = () => {
         console.log("검색 버튼 클릭");
@@ -13,19 +16,24 @@ const Header = () => {
 
     return (
         <>
-            <header className={"w-full fixed top-0 left-0 shadow-md"}>
+            <header className={"w-full fixed top-0 left-0 border-b-1 border-gray-300"}>
                 <div className={"flex px-2 py-1"}>
                     <div className={"flex items-center grow"}>
-                        <a href="/" className="flex-shrink-0">
+                        <Link to="/" className="flex-shrink-0">
                             <img className={"h-12 w-auto"} src="/logo/esjjh.png" alt=""/>
-                        </a>
+                        </Link>
                         <div className={"hidden sm:flex"}>
                             <input className={"min-w-72 mx-1 border-2 border-gray-200 focus:outline-gray-300 rounded-sm"} type={"text"}></input>
-                            <button className={"min-w-16 mx-1 bg-rose-200 border-2 border-rose-300 hover:bg-rose-400 hover:border-rose-500 hover:cursor-pointer rounded-sm"} type={"button"} onClick={clickSearchButton}>검색</button>
+                            <button className={"min-w-16 mx-1 bg-rose-200 hover:cursor-pointer rounded-sm"} type={"button"} onClick={clickSearchButton}>검색</button>
                         </div>
                     </div>
                     <div className={"flex items-center"}>
-                        <button className={"bg-gray-200 border-2 border-gray-300 hover:bg-gray-400 hover:border-gray-500 hover:cursor-pointer rounded-sm w-20 h-8"} type={"button"} onClick={clickLoginButton}>로그인</button>
+                        {
+                            auth?
+                            <button className={"bg-indigo-500 hover:cursor-pointer rounded-sm w-20 h-8 text-white"} type={"button"} onClick={clickLoginButton}>{auth.nickname}</button>
+                            :
+                            <button className={"bg-indigo-500 hover:cursor-pointer rounded-sm w-20 h-8 text-white"} type={"button"} onClick={clickLoginButton}>로그인</button>
+                        }
                     </div>
                 </div>
             </header>

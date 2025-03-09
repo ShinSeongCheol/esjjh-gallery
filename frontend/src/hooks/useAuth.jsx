@@ -1,21 +1,26 @@
-import {useEffect, useState} from "react";
-import {Cookies} from "react-cookie";
+import {useEffect, useLayoutEffect, useState} from "react";
 import axios from "axios";
 
 const useAuth = () => {
-    const [auth, setAuth] = useState({});
+    const [auth, setAuth] = useState();
 
     useEffect(() => {
-        const cookies = new Cookies();
 
-        let get_user_url = import.meta.env.VITE_BACKEND_URL + '/auth';
-        axios.post(get_user_url, {}, {
-            withCredentials: true,
-            headers: {
-                'Authorization': `Bearer ${cookies.get('access_token')}`
-            },
+        let get_auth_url = import.meta.env.VITE_BACKEND_URL + '/auth';
+        axios.post(get_auth_url, {}, {
+            withCredentials: true
         }).then(res => {
             setAuth(res.data);
+        }).catch(err => {
+            // 토큰 만료 예외처리
+            if (err.response.status === 419 && err.response.data.name === 'TokenExpiredError') {
+                let refresh_auth_url = import.meta.env.VITE_BACKEND_URL + '/auth/refresh';
+                axios.post(refresh_auth_url, {}, {withCredentials: true}).then(res => {
+                    setAuth(res.data);
+                }).catch(err => {
+                    console.error(err);
+                })
+            }
         });
 
     }, []);
